@@ -1,0 +1,43 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Load Scenario Variables
+      include_vars: vars/main.yml
+
+    - name: Check telnet was installed
+      stat:
+        path: "/usr/local/bin/telnet"
+      register: telnet_file
+
+    - name: Check Google Chrome was installed
+      stat:
+        path: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+      register: chrome_file
+
+    - name: Check which taps are present
+      command: brew tap
+      changed_when: true
+      register: taps
+
+    - name: Assert telnet was Installed Correctly
+      assert:
+        that:
+          - telnet_file.stat.exists
+          - telnet_file.stat.executable
+        msg: "The telnet binary must exist and be executable."
+
+    - name: Assert Google Chrome was Installed Correctly
+      assert:
+        that:
+          - chrome_file.stat.exists
+          - chrome_file.stat.executable
+        msg: "The Google Chrome binary must exist and be executable."
+
+    - name: Assert Homebrew Taps were Installed Correctly
+      assert:
+        that:
+          - brew_taps[0] in taps.stdout
+        msg: "The configured homebrew taps be present."

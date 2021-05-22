@@ -13,3 +13,6 @@ main() {
 }
 
 main
+
+# Create Empty Results File
+touch /tmp/results.yml

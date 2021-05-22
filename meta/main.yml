@@ -3,9 +3,9 @@ galaxy_info:
   role_name: homebrew_retry
   namespace: osx_provisioner
   author: Niall Byrne
-  description: Encapsulates geerlingguy.homebrew in a simple retry loop, to allow for connectivity errors during homebrew installs.
+  description: Ansible role that installs homebrew apps, casks and taps in a retry loop to deal with connectivity issues.
   company: Shared Vision Solutions
-  license: MPL-2
+  license: MIT
   platforms:
     - name: MacOSX
       versions:
@@ -14,5 +14,10 @@ galaxy_info:
   min_ansible_version: 3.3.0
   galaxy_tags:
     - osx
+    - mac
+    - homebrew
+    - provision
+    - install
 
-dependencies: []
+dependencies:
+  - geerlingguy.homebrew

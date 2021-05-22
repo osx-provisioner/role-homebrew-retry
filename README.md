@@ -1,44 +1,67 @@
 # role-homebrew-retry
 
 ### Master:
-- Travis CI: ![TravisCI](https://travis-ci.com/osx-provisioner/role-homebrew-retry.svg?branch=master)
-- Github Actions: [![role-homebrew-retry](https://github.com/osx-provisioner/role-homebrew-retry/actions/workflows/push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/role-homebrew-retry/actions/workflows/push.yml)
+[![role-homebrew-retry](https://github.com/osx-provisioner/role-homebrew-retry/actions/workflows/push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/role-homebrew-retry/actions/workflows/push.yml)
 
 ### Production:
-- Travis CI: ![TravisCI](https://travis-ci.com/osx-provisioner/role-homebrew-retry.svg?branch=production)
-- Github Actions: [![role-homebrew-retry](https://github.com/osx-provisioner/role-homebrew-retry/actions/workflows/push.yml/badge.svg?branch=production)](https://github.com/osx-provisioner/role-homebrew-retry/actions/workflows/push.yml)
+[![role-homebrew-retry](https://github.com/osx-provisioner/role-homebrew-retry/actions/workflows/push.yml/badge.svg?branch=production)](https://github.com/osx-provisioner/role-homebrew-retry/actions/workflows/push.yml)
 
-Encapsulates geerlingguy.homebrew in a simple retry loop, to allow for connectivity errors during homebrew installs.
+Ansible role that installs homebrew apps, casks and taps in a retry loop to deal with connectivity issues.
+
+### Notes:
+- See the [homebrew website](https://brew.sh/) for further details about this tool.
 
 Requirements
 ------------
 
 None
 
-
 Role Variables
 --------------
 
-None   
+- `brew_user`:
+  - The user to run homebrew operations as.
+  - This role uses the dependency [geeringguy.homebrew](https://github.com/geerlingguy/ansible-role-homebrew) to setup homebrew, you may need to set the `homebrew_user` variable in the toplevel playbook.
+  - The default value will work fine if you're simply installing for the current user.
+- `brew_retries`:
+  - The number of attempts that will be made to install the homebrew apps, casks and taps.
+- `brew_packages`:
+  - A list of homebrew apps install.
+- `brew_casks`:
+  - A list of homebrew casks to install.
+- `brew_taps`:
+  - A list of homebrew taps to install.
+- `brew_install_state`:
+  - Toggle between various install options.
+  - Set this to `latest` to install the newest version on each execution.
+  - Set this to `present` to simply ensure the app or cash is present.
+  - `latest` is temporarily disabled for casks due to [this issue](https://github.com/ansible-collections/community.general/issues/1647).
+- `brew_sudo_password`:
+  - Some casks may require SUDO to complete their install (Zoom is an example...)  This variable gives you a way to override the default value used.
+
+[See The Default Values](defaults/main.yml)
 
 Dependencies
 ------------
 
-None
+- geerlingguy.homebrew
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: all
-      roles:
-         - { role: osx-provisioner.role-homebrew-retry }
+```yaml
+- hosts: all
+  roles:
+  - role: osx_provisioner.homebrew_retry
+    brew_retries: 42
+    brew_packages:
+      - mysql
+```
 
 License
 -------
 
-MPL-2
+MIT
 
 Author Information
 ------------------

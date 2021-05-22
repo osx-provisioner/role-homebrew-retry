@@ -1,0 +1,9 @@
+---
+brew_packages:
+  - telnet
+brew_casks:
+  - google-chrome
+brew_taps:
+  - gromgit/fuse
+
+ansible_become_password: ""

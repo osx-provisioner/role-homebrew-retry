@@ -1,2 +1,14 @@
 ---
-# defaults file for role-homebrew-retry
+# defaults file for homebrew-retry
+
+brew_user: "{{ lookup('env', 'USER') }}"
+brew_retries: 3
+brew_taps: []
+brew_packages: []
+brew_casks: []
+
+# Typical Values: latest, present
+brew_install_state: latest
+
+# Some casks may require SUDO to complete their install
+brew_sudo_password: "{{ ansible_become_password }}"
