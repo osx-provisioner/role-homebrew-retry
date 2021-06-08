@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "role-homebrew-retry"
-version = "0.1.1"
+version = "0.2.0"
 description = "Encapsulates geerlingguy.homebrew in a simple retry loop, to allow for connectivity errors during homebrew installs."
 authors = ["Niall Byrne <niall@niallbyrne.ca>"]
 

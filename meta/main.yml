@@ -17,7 +17,5 @@ galaxy_info:
     - mac
     - homebrew
     - provision
-    - install
 
-dependencies:
-  - geerlingguy.homebrew
+dependencies: []

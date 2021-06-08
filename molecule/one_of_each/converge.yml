@@ -7,6 +7,12 @@
     - name: Load Scenario Variables
       include_vars: vars/main.yml
 
-    - name: "Include homebrew-retry"
+    - name: Include elliotweiser.osx-command-line-tools
+      include_role:
+        name: "elliotweiser.osx-command-line-tools"
+    - name: Include geerlingguy.mac.homebrew
+      include_role:
+        name: "geerlingguy.mac.homebrew"
+    - name: Include homebrew-retry
       include_role:
         name: "role-homebrew-retry"

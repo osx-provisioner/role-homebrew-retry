@@ -8,20 +8,18 @@
 
 Ansible role that installs homebrew apps, casks and taps in a retry loop to deal with connectivity issues.
 
-### Notes:
-- See the [homebrew website](https://brew.sh/) for further details about this tool.
-
 Requirements
 ------------
 
-None
+- Homebrew must aleady be present on the machine ([geerlingguy.mac.hombrew](https://github.com/geerlingguy/ansible-collection-mac) is a great solution for this).
+- See the [homebrew website](https://brew.sh/) for further details about this tool.
 
 Role Variables
 --------------
 
 - `brew_user`:
   - The user to run homebrew operations as.
-  - This role uses the dependency [geeringguy.homebrew](https://github.com/geerlingguy/ansible-role-homebrew) to setup homebrew, you may need to set the `homebrew_user` variable in the toplevel playbook.
+  - This role uses the dependency [geeringguy.mac.homebrew](https://github.com/geerlingguy/ansible-collection-mac) to setup homebrew, you may need to set the `homebrew_user` variable in the toplevel playbook.
   - The default value will work fine if you're simply installing for the current user.
 - `brew_retries`:
   - The number of attempts that will be made to install the homebrew apps, casks and taps.
@@ -44,7 +42,7 @@ Role Variables
 Dependencies
 ------------
 
-- geerlingguy.homebrew
+None
 
 Example Playbook
 ----------------
@@ -52,6 +50,8 @@ Example Playbook
 ```yaml
 - hosts: all
   roles:
+  - role: elliotweiser.osx-command-line-tools
+  - role: geerlingguy.mac.homebrew
   - role: osx_provisioner.homebrew_retry
     brew_retries: 42
     brew_packages:
