@@ -2,7 +2,7 @@
     "_template": "https://github.com/shared-vision-solutions/ansible-workbench.git",
     "author": "Niall Byrne",
     "company": "Shared Vision Solutions",
-    "description": "Ansible role that wraps geerlingguy.homebrew in a retry loop to deal with connectivity issues.",
+    "description": "Ansible role that installs homebrew apps, casks and taps in a retry loop to deal with connectivity issues.",
     "email": "niall@niallbyrne.ca",
     "galaxy_namespace_slug": "osx_provisioner",
     "galaxy_role_slug": "homebrew_retry",

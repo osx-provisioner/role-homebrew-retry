@@ -6,6 +6,8 @@ name: role-homebrew-retry-push
 
 on:
   push:
+  schedule:
+    - cron: "0 6 * * 1"
   workflow_dispatch:
 
 jobs:
@@ -34,6 +36,7 @@ jobs:
       - name: Documentation Test -- Report Success
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: documentation test was successful!"
+
       - name: Documentation Test -- Report Failure
         if: failure()
         run: |
@@ -75,6 +78,7 @@ jobs:
       - name: Molecule Lint -- Report Job Status (Success)
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: molecule linting was successful!"
+
       - name: Molecule Lint -- Report Job Status (Failure)
         if: failure()
         run: |
@@ -154,6 +158,7 @@ jobs:
         id: Changelog
         env:
           REPO: ${{ github.repository }}
+
       - name: Release -- Create Github Release
         if: contains(github.ref, '/tags/v')
         uses: actions/create-release@v1
@@ -171,6 +176,7 @@ jobs:
         if: contains(github.ref, '/tags/v')
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: automated release has been created:\nhttps://github.com/${USERNAME}/${PROJECT_NAME}/releases"
+
       - name: Release -- Report Job Status (Failure)
         if: failure() && contains(github.ref, '/tags/v')
         run: |
@@ -200,7 +206,7 @@ jobs:
           WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Security Test -- Run Gitleaks
-        uses: zricethezav/gitleaks-action@master
+        uses: zricethezav/gitleaks-action@v1.6.0
 
       - name: Security Test -- Check Dependencies
         run: |
@@ -212,6 +218,7 @@ jobs:
       - name: Security Test -- Report Job Status on Success
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: security checks were successful!"
+
       - name: Security Test -- Report Job Status on Failure
         if: failure()
         run: |
@@ -229,27 +236,24 @@ jobs:
 
       - name: Workflow Lint -- Checkout Repository
         uses: actions/checkout@v1
-      - name: Workflow Lint -- Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.python-version }}
 
       - name: Workflow Lint -- Setup Environment
         run: |
           source ./.github/scripts/setup.sh
         env:
           WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-      - name: Workflow Lint -- Install Requirements
-        run: |
-          pip install yamllint
 
       - name: Workflow Lint -- Run Linter
-        run: |
-          yamllint .github/workflows -f standard
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          format: standard
+          file_or_dir: ./.github/workflows
+          config_file: ./.yamllint
 
       - name: Workflow Lint -- Report Job Status (Success)
         run: |
           ./.github/scripts/notifications.sh "${NOTIFICATION}" ":white_check_mark: workflow linting was successful!"
+
       - name: Workflow Lint -- Report Job Status (Failure)
         if: failure()
         run: |
