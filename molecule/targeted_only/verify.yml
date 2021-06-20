@@ -1,0 +1,28 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Load Scenario Variables
+      include_vars: vars/main.yml
+
+    - name: Check Spotify was installed
+      stat:
+        path: "{{ brew_targeted_casks_location }}/Spotify.app/Contents/MacOS/Spotify"
+      register: spotify_file
+
+    - name: Check Spotify App Permissions
+      stat:
+        path: "{{ brew_targeted_casks_location }}/Spotify.app"
+      register: spotify_app
+
+    - name: Assert Spotify was Installed Correctly
+      assert:
+        that:
+          - spotify_file.stat.exists
+          - spotify_file.stat.executable
+          - spotify_app.stat.mode == "0775"
+          - spotify_app.stat.gr_name == brew_targeted_casks_group
+          - spotify_app.stat.pw_name == brew_user
+        msg: "The Spotify binary must exist and be executable, and have the targeted permissions."

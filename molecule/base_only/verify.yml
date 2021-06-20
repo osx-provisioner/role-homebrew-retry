@@ -17,21 +17,6 @@
         path: "/Applications/AppCleaner.app/Contents/MacOS/AppCleaner"
       register: cleaner_file
 
-    - name: Check Transmission was installed
-      stat:
-        path: "{{ brew_user_casks_location }}/Transmission.app/Contents/MacOS/Transmission"
-      register: transmission
-
-    - name: Check Spotify was installed
-      stat:
-        path: "{{ brew_targeted_casks_location }}/Spotify.app/Contents/MacOS/Spotify"
-      register: spotify_file
-
-    - name: Check Spotify App Permissions
-      stat:
-        path: "{{ brew_targeted_casks_location }}/Spotify.app"
-      register: spotify_app
-
     - name: Check which taps are present
       command: brew tap
       changed_when: true
@@ -50,23 +35,6 @@
           - cleaner_file.stat.exists
           - cleaner_file.stat.executable
         msg: "The App Cleaner binary must exist and be executable."
-
-    - name: Assert Transmission was Installed Correctly
-      assert:
-        that:
-          - transmission.stat.exists
-          - transmission.stat.executable
-        msg: "The Transmission binary must exist and be executable."
-
-    - name: Assert Spotify was Installed Correctly
-      assert:
-        that:
-          - spotify_file.stat.exists
-          - spotify_file.stat.executable
-          - spotify_app.stat.mode == "0775"
-          - spotify_app.stat.gr_name == brew_targeted_casks_group
-          - spotify_app.stat.pw_name == brew_user
-        msg: "The Spotify binary must exist and be executable, and have the targeted permissions."
 
     - name: Assert Homebrew Taps were Installed Correctly
       assert:

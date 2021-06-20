@@ -4,8 +4,22 @@
 brew_user: "{{ lookup('env', 'USER') }}"
 brew_retries: 3
 brew_taps: []
+
+# Homebrew Packages, Installed to the default homebrew location
+# (Usually /usr/local, but depends on your homebrew install configuration.)
 brew_packages: []
+
+# Standard /Applications Installed Brew Casks
 brew_casks: []
+
+# Installs to {{ brew_user_casks_location }}
+brew_user_casks_location: "{{ lookup('env', 'HOME') }}/Applications"
+brew_user_casks: []
+
+# Installs the casks to {{ brew_targeted_casks_location }}
+brew_targeted_casks_group: "admin"
+brew_targeted_casks_location: "/opt/casks"
+brew_targeted_casks: []
 
 # Typical Values: latest, present
 brew_install_state: latest

@@ -93,7 +93,7 @@ jobs:
         os: [10.15]
         platform: [x86_64]
         python-version: [3.8.10]
-        scenario: ["one_of_each"]
+        scenario: ["base_only", "one_of_each", "taps_only", "targeted_only"]
 
     steps:
       - name: OSX Build -- Checkout
