@@ -90,6 +90,8 @@ License
 
 MIT
 
+(Homebrew itself is licensed as BSD 2-Clause)
+
 Author Information
 ------------------
 
