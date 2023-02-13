@@ -5,61 +5,61 @@
   tasks:
 
     - name: Load Scenario Variables
-      include_vars: vars/main.yml
+      ansible.builtin.include_vars: vars/main.yml
 
     - name: Check telnet was installed
-      stat:
+      ansible.builtin.stat:
         path: "/usr/local/bin/telnet"
       register: telnet_file
 
     - name: Check AppCleaner was installed
-      stat:
+      ansible.builtin.stat:
         path: "/Applications/AppCleaner.app/Contents/MacOS/AppCleaner"
       register: cleaner_file
 
     - name: Check Transmission was installed
-      stat:
+      ansible.builtin.stat:
         path: "{{ brew_user_casks_location }}/Transmission.app/Contents/MacOS/Transmission"
       register: transmission
 
     - name: Check Spotify was installed
-      stat:
+      ansible.builtin.stat:
         path: "{{ brew_targeted_casks_location }}/Spotify.app/Contents/MacOS/Spotify"
       register: spotify_file
 
     - name: Check Spotify App Permissions
-      stat:
+      ansible.builtin.stat:
         path: "{{ brew_targeted_casks_location }}/Spotify.app"
       register: spotify_app
 
     - name: Check which taps are present
-      command: brew tap
+      ansible.builtin.command: brew tap
       changed_when: true
       register: taps
 
     - name: Assert telnet was Installed Correctly
-      assert:
+      ansible.builtin.assert:
         that:
           - telnet_file.stat.exists
           - telnet_file.stat.executable
         msg: "The telnet binary must exist and be executable."
 
     - name: Assert App Cleaner was Installed Correctly
-      assert:
+      ansible.builtin.assert:
         that:
           - cleaner_file.stat.exists
           - cleaner_file.stat.executable
         msg: "The App Cleaner binary must exist and be executable."
 
     - name: Assert Transmission was Installed Correctly
-      assert:
+      ansible.builtin.assert:
         that:
           - transmission.stat.exists
           - transmission.stat.executable
         msg: "The Transmission binary must exist and be executable."
 
     - name: Assert Spotify was Installed Correctly
-      assert:
+      ansible.builtin.assert:
         that:
           - spotify_file.stat.exists
           - spotify_file.stat.executable
@@ -69,7 +69,7 @@
         msg: "The Spotify binary must exist and be executable, and have the targeted permissions."
 
     - name: Assert Homebrew Taps were Installed Correctly
-      assert:
+      ansible.builtin.assert:
         that:
           - brew_taps[0] in taps.stdout
         msg: "The configured homebrew taps be present."

@@ -5,20 +5,20 @@
   tasks:
 
     - name: Load Scenario Variables
-      include_vars: vars/main.yml
+      ansible.builtin.include_vars: vars/main.yml
 
     - name: Check Spotify was installed
-      stat:
+      ansible.builtin.stat:
         path: "{{ brew_targeted_casks_location }}/Spotify.app/Contents/MacOS/Spotify"
       register: spotify_file
 
     - name: Check Spotify App Permissions
-      stat:
+      ansible.builtin.stat:
         path: "{{ brew_targeted_casks_location }}/Spotify.app"
       register: spotify_app
 
     - name: Assert Spotify was Installed Correctly
-      assert:
+      ansible.builtin.assert:
         that:
           - spotify_file.stat.exists
           - spotify_file.stat.executable

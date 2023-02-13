@@ -2,13 +2,13 @@
 # tasks file for role-homebrew-retry
 
 - name: Base Homebrew Taps, Apps and Casks
-  include_tasks: "tasks/01_base.yml"
+  ansible.builtin.include_tasks: "tasks/01_base.yml"
   when: ansible_os_family == "Darwin"
 
 - name: User Casks
-  include_tasks: "tasks/02_user_casks.yml"
+  ansible.builtin.include_tasks: "tasks/02_user_casks.yml"
   when: ansible_os_family == "Darwin"
 
 - name: Base Homebrew Taps, Apps and Casks
-  include_tasks: "tasks/03_targeted_casks.yml"
+  ansible.builtin.include_tasks: "tasks/03_targeted_casks.yml"
   when: ansible_os_family == "Darwin"
