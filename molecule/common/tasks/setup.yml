@@ -10,6 +10,6 @@
   ansible.builtin.include_role:
     name: "geerlingguy.mac.homebrew"
 
-- name: Include homebrew-retry
+- name: Include osx_provisioner.homebrew-retry
   ansible.builtin.include_role:
-    name: "role-homebrew-retry"
+    name: "osx_provisioner.homebrew_retry"
