@@ -195,11 +195,8 @@ jobs:
         run: |
           mkdir -p ~/.cache/pypoetry/virtualenvs/
           source ./role/.github/scripts/ansible_cache.sh  \
-            "$(pwd)/ansible_cache/ansible-compat"         \
-            ~/.cache/ansible-compat
-          source ./role/.github/scripts/ansible_cache.sh  \
-            "$(pwd)/ansible_cache/molecule"               \
-            ~/.cache/molecule
+            "$(pwd)/ansible_cache"                        \
+            ~/.cache
 
       - name: Molecule Lint -- Mount Ansible Cache
         uses: actions/cache@v3
@@ -269,11 +266,8 @@ jobs:
         run: |
           mkdir -p ~/.cache/pypoetry/virtualenvs
           source ./role/.github/scripts/ansible_cache.sh  \
-            "$(pwd)/ansible_cache/ansible-compat"         \
-            ~/.cache/ansible-compat
-          source ./role/.github/scripts/ansible_cache.sh  \
-            "$(pwd)/ansible_cache/molecule"               \
-            ~/.cache/molecule
+            "$(pwd)/ansible_cache"                        \
+            ~/.cache
 
       - name: OSX Build -- Mount Ansible Cache
         uses: actions/cache@v3
