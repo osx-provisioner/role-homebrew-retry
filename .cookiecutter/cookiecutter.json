@@ -1,5 +1,5 @@
 {
-    "_template": "https://github.com/shared-vision-solutions/ansible-workbench.git",
+    "_template": "https://github.com/niall-byrne/ansible-workbench.git",
     "author": "Niall Byrne",
     "company": "Shared Vision Solutions",
     "description": "Ansible role that installs homebrew apps, casks and taps in a retry loop to deal with connectivity issues.",
